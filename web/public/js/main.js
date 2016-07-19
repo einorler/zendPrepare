@@ -7,13 +7,17 @@ $('document').ready(function(){
 
     $('.next').on('click', function () {
         var $div = $(this).closest('.question');
-        $div.hide();
-        $div.next().toggleClass('hidden');
+        $div.toggleClass('hidden');
+        var id = parseInt($div.attr('id').substr(1)) + 1;
+        id = 'q'+id;
+        $('#'+id).toggleClass('hidden');
     });
 
     $('.previous').on('click', function () {
         var $div = $(this).closest('.question');
-        $div.hide();
-        $div.siblings().first().toggleClass('hidden');
+        $div.toggleClass('hidden');
+        var id = parseInt($div.attr('id').substr(1)) - 1;
+        id = 'q'+id;
+        $('#'+id).toggleClass('hidden');
     });
 });
