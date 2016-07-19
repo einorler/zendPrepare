@@ -1,0 +1,45 @@
+{% set currentPath = path(app.request.attributes.get('_route'),
+app.request.attributes.get('_route_params')) %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>{% block title %}Zend Prepare!{% endblock %}</title>
+        {% block stylesheets %}{% endblock %}
+        <link rel="stylesheet" href="{{ asset('public/css/bootstrap.css') }}">
+        <link href="{{ asset('public/css/cover.css') }}" rel="stylesheet" />
+    </head>
+    <body>
+    <div class="site-wrapper">
+        <div class="site-wrapper-inner">
+
+            <div class="cover-container">
+
+                <div class="masthead clearfix">
+                    <div class="inner">
+                        <h3 class="masthead-brand">Zend Preparation</h3>
+                        <nav>
+                            <ul class="nav masthead-nav">
+                                <li
+                                    {% if currentPath == '/' %}
+                                        class="active"
+                                    {% endif %}
+                                ><a href="/">Home</a></li>
+                                <li
+                                    {% if currentPath == '/test' %}
+                                        class="active"
+                                    {% endif %}
+                                ><a href="/test">Test</a></li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+        {% block body %}{% endblock %}
+            </div>
+        </div>
+    </div>
+    <script src="{{ asset('public/js/jQuery.js') }}"></script>
+    <script src="{{ asset('public/js/bootstrap.js') }}"></script>
+    {% block javascripts %}{% endblock %}
+    </body>
+</html>
