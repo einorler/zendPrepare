@@ -12,3 +12,5 @@ services:
     qa_picker:
         class: AppBundle\Service\QAPicker
         arguments: ["@qa_builder"]
+    answer_checker:
+        class: AppBundle\Service\AnswerChecker
