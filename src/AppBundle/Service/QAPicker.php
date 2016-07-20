@@ -39,4 +39,20 @@ class QAPicker
 
         return $return;
     }
+
+    /**
+     * Returns a QA object by id
+     *
+     * @param string $id
+     *
+     * @returns QA|null
+     */
+    public function getQA($id)
+    {
+        if (isset($this->qas[$id])) {
+            return $this->qas[$id];
+        } else {
+            return null;
+        }
+    }
 }
