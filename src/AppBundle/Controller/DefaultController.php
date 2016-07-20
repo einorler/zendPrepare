@@ -54,13 +54,6 @@ class DefaultController extends Controller
                 $answers[$id] = $request->request->get($id);
             }
         }
-
-        $persentage = 0;
-
-        /** @var QA $qa */
-        foreach ($qas as $id => $qa) {
-            // TODO: calculate the persentage and put everything in separate methods in a service
-        }
     }
 
     /**
@@ -71,6 +64,6 @@ class DefaultController extends Controller
     private function getIdsArray($ids)
     {
         $ids = trim($ids, ',');
-        $ids = explode(',', $ids);
+        return explode(',', $ids);
     }
 }
