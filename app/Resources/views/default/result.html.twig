@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <div class="inner cover" style="padding-top: 80px">
+        <h1>Test</h1>
+        <form action="/result" method="post" class="text-left">
+            {% set i = 1 %}
+            {% for question in questions %}
+                <div class="question hidden" id="q{{ i }}">
+                    {% set i = i + 1 %}
+                    {{ question.question|raw }}
+                    {% for answer in question.answers %}
+                        <div class="radio">
+                            <label>
+                                <input type="checkbox" name="{{ question.id }}[{{ answer.id }}]">
+                                {{ answer.answer|raw }}
+                            </label>
+                        </div>
+                    {% endfor %}
+                    <p class="lead">
+                        <span class="btn btn-lg btn-default previous">Previous</span>
+                        <span class="btn btn-lg btn-default next">Next!</span>
+                    </p>
+                </div>
+            {% endfor %}
+            <input type="text" name="ids" class="hidden" value="
+                {% for id in ids %}
+                    {{ id }},
+                {% endfor %}
+            ">
+            <p class="lead">
+                <button type="submit" class="btn btn-lg btn-default">Submit</button>
+            </p>
+        </form>
+    </div>
+
+    <div class="mastfoot">
+        <div class="inner">
+            <p>Cover template for <a href="http://getbootstrap.com">Bootstrap</a>, by <a href="https://twitter.com/mdo">@mdo</a>.</p>
+        </div>
+    </div>
+
+{% endblock %}
+{% block javascripts %}
+    <script src="{{ asset('/public/js/main.js') }}"></script>
+{% endblock %}
