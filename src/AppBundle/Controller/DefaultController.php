@@ -5,6 +5,7 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\QA;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\BrowserKit\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -39,6 +40,8 @@ class DefaultController extends Controller
     /**
      * @Route("/result", name="resultpage")
      * @param Request $request
+     *
+     * @return Response
      */
     public function resultAction(Request $request)
     {
@@ -54,6 +57,13 @@ class DefaultController extends Controller
                 $answers[$id] = $request->request->get($id);
             }
         }
+
+        return $this->render('default/result.html.twig', [
+            'questions' => $qas,
+            'answers' => $answers,
+            'ids' => $ids,
+            'eval' => $this->get('answer_checker')->check($qas, $answers)
+        ]);
     }
 
     /**
