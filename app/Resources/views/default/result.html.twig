@@ -3,35 +3,34 @@
 {% block body %}
 
     <div class="inner cover" style="padding-top: 80px">
-        <h1>Test</h1>
-        <form action="/result" method="post" class="text-left">
+        <h1>Results: <span>{{ eval['final'] }} %</span></h1>
+        <form class="text-left">
             {% set i = 1 %}
             {% for question in questions %}
                 <div class="question hidden" id="q{{ i }}">
                     {% set i = i + 1 %}
                     {{ question.question|raw }}
+
                     {% for answer in question.answers %}
                         <div class="radio">
-                            <label>
-                                <input type="checkbox" name="{{ question.id }}[{{ answer.id }}]">
+                            <label
+                                {% if answer.correct %}
+                                    style="color: greenyellow;"
+                                {% elseif answer.correct == false and answers[question.id][answer.id] is defined%}
+                                    style="color: orangered;"
+                                {% endif %}>
                                 {{ answer.answer|raw }}
                             </label>
                         </div>
                     {% endfor %}
+                    <h2>Result: <span class="btn btn-sm btn-default">{{ eval[question.id]}} %</span> Explanation:</h2>
+                    {{ question.explanation|raw }}
                     <p class="lead">
                         <span class="btn btn-lg btn-default previous">Previous</span>
                         <span class="btn btn-lg btn-default next">Next!</span>
                     </p>
                 </div>
             {% endfor %}
-            <input type="text" name="ids" class="hidden" value="
-                {% for id in ids %}
-                    {{ id }},
-                {% endfor %}
-            ">
-            <p class="lead">
-                <button type="submit" class="btn btn-lg btn-default">Submit</button>
-            </p>
         </form>
     </div>
 
