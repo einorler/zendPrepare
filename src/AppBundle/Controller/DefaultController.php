@@ -50,8 +50,9 @@ class DefaultController extends Controller
         $answers = [];
         $ids = $this->getIdsArray($request->request->get('ids'));
 
-        foreach ($ids as $id) {
+        foreach ($ids as $key => $id) {
             $id = trim($id);
+            $ids[$key] = trim($id);
             if ($picker->getQA($id)) {
                 $qas[$id] = $picker->getQA($id);
                 $answers[$id] = $request->request->get($id);
