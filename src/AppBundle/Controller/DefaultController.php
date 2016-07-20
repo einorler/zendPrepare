@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\QA;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -14,9 +15,7 @@ class DefaultController extends Controller
      */
     public function indexAction(Request $request)
     {
-        return $this->render('default/index.html.twig', [
-            'questions' => $this->get('qa_picker')->pick()
-        ]);
+        return $this->render('default/index.html.twig');
     }
 
     /**
@@ -24,8 +23,45 @@ class DefaultController extends Controller
      */
     public function testAction(Request $request)
     {
+        $questions = $this->get('qa_picker')->pick();
+        $ids = [];
+
+        foreach ($questions as $question) {
+            $ids[] = $question->id;
+        }
+
         return $this->render('default/test.html.twig', [
-            'questions' => $this->get('qa_picker')->pick()
+            'questions' => $questions,
+            'ids' => $ids
         ]);
+    }
+
+    /**
+     * @Route("/result", name="resultpage")
+     * @param Request $request
+     */
+    public function resultAction(Request $request)
+    {
+        $picker = $this->get('qa_picker');
+        $qas = [];
+        $answers = [];
+        $ids = trim($request->request->get('ids'), ',');
+        $ids = explode(',', $ids);
+
+        foreach ($ids as $id) {
+            $id = trim($id);
+            $qa = $picker->getQA($id);
+            if ($qa) {
+                $qas[$id] = $qa;
+                $answers[$id] = $request->request->get($id);
+            }
+        }
+
+        $persentage = 0;
+
+        /** @var QA $qa */
+        foreach ($qas as $id => $qa) {
+            // TODO: calculate the persentage and put everything in separate methods in a service
+        }
     }
 }

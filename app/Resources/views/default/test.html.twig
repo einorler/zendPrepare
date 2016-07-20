@@ -4,7 +4,7 @@
 
     <div class="inner cover" style="padding-top: 80px">
         <h1>Test</h1>
-        <form action="/test" class="text-left">
+        <form action="/result" method="post" class="text-left">
             {% set i = 1 %}
             {% for question in questions %}
                 <div class="question hidden" id="q{{ i }}">
@@ -13,7 +13,7 @@
                     {% for answer in question.answers %}
                         <div class="radio">
                             <label>
-                                <input type="checkbox" name="{{ answer.id }}">
+                                <input type="checkbox" name="{{ question.id }}[{{ answer.id }}]">
                                 {{ answer.answer|raw }}
                             </label>
                         </div>
@@ -24,6 +24,11 @@
                     </p>
                 </div>
             {% endfor %}
+            <input type="text" name="ids" class="hidden" value="
+                {% for id in ids %}
+                    {{ id }},
+                {% endfor %}
+            ">
             <p class="lead">
                 <button type="submit" class="btn btn-lg btn-default">Submit</button>
             </p>
