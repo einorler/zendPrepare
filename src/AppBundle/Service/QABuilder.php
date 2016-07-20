@@ -41,7 +41,7 @@ class QABuilder
                     ->setCorrect($answer['correct']);
             }
 
-            $qas[] = $qa;
+            $qas[$qa->id] = $qa;
         }
 
         return $qas;
