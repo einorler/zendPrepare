@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <div class="inner cover" style="padding-top: 80px">
+        <h1>Results: <span>{{ eval['final'] }} %</span></h1>
+        <form class="text-left">
+            {% set i = 1 %}
+            {% for question in questions %}
+                <div class="question hidden" id="q{{ i }}">
+                    {% set i = i + 1 %}
+                    {{ question.question|raw }}
+
+                    {% for answer in question.answers %}
+                        <div class="radio">
+                            <label
+                                {% if answer.correct %}
+                                    style="color: greenyellow;"
+                                {% elseif answer.correct == false and answers[question.id][answer.id] is defined%}
+                                    style="color: orangered;"
+                                {% endif %}>
+                                {{ answer.answer|raw }}
+                            </label>
+                        </div>
+                    {% endfor %}
+                    <h2>Result: <span class="btn btn-sm btn-default">{{ eval[question.id]}} %</span> Explanation:</h2>
+                    {{ question.explanation|raw }}
+                    <p class="lead">
+                        <span class="btn btn-lg btn-default previous">Previous</span>
+                        <span class="btn btn-lg btn-default next">Next!</span>
+                    </p>
+                </div>
+            {% endfor %}
+        </form>
+    </div>
+
+    <div class="mastfoot">
+        <div class="inner">
+            <p>Cover template for <a href="http://getbootstrap.com">Bootstrap</a>, by <a href="https://twitter.com/mdo">@mdo</a>.</p>
+        </div>
+    </div>
+
+{% endblock %}
+{% block javascripts %}
+    <script src="{{ asset('/public/js/main.js') }}"></script>
+{% endblock %}
