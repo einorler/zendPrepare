@@ -45,14 +45,12 @@ class DefaultController extends Controller
         $picker = $this->get('qa_picker');
         $qas = [];
         $answers = [];
-        $ids = trim($request->request->get('ids'), ',');
-        $ids = explode(',', $ids);
+        $ids = $this->getIdsArray($request->request->get('ids'));
 
         foreach ($ids as $id) {
             $id = trim($id);
-            $qa = $picker->getQA($id);
-            if ($qa) {
-                $qas[$id] = $qa;
+            if ($picker->getQA($id)) {
+                $qas[$id] = $picker->getQA($id);
                 $answers[$id] = $request->request->get($id);
             }
         }
@@ -63,5 +61,16 @@ class DefaultController extends Controller
         foreach ($qas as $id => $qa) {
             // TODO: calculate the persentage and put everything in separate methods in a service
         }
+    }
+
+    /**
+     * Extracts an ids array from ids string
+     * @param string $ids
+     * @return array
+     */
+    private function getIdsArray($ids)
+    {
+        $ids = trim($ids, ',');
+        $ids = explode(',', $ids);
     }
 }
