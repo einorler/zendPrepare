@@ -1,3 +1,4 @@
+var time = 0;
 $('document').ready(function(){
     var $form = $('form');
     var $first = $form.children('.question').first();
@@ -20,4 +21,24 @@ $('document').ready(function(){
         id = 'q'+id;
         $('#'+id).toggleClass('hidden');
     });
+
+    timer();
 });
+
+function timer(){
+    time++;
+    var minutes = parseInt(time / 60);
+    var seconds = time % 60;
+    if (seconds < 10) {
+        seconds = '0'+seconds;
+    }
+    if (minutes < 10) {
+        minutes = '0'+minutes;
+    }
+    $('#seconds').html(seconds);
+    $('#minutes').html(minutes);
+
+    setTimeout(function(){
+        timer();
+    }, 1000);
+}
